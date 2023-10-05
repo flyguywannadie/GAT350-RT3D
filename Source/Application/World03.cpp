@@ -1,20 +1,89 @@
-#include "World01.h"
+#include "World03.h"
 #include "Framework/Framework.h"
-#include "Renderer/Renderer.h"
 #include "Input/InputSystem.h"
+
+#define INTERLEAVE
 
 namespace nc
 {
-    bool World01::Initialize()
+    bool World03::Initialize()
     {
+        m_program = GET_RESOURCE(Program, "shaders/unlit_color.prog");
+        m_program->Use();
+
+#ifdef INTERLEAVE
+        //vertex data  (position,   color)
+        float vertexData[] = {
+            -0.25f, -0.25f, 0.0f,   1.0f, 0.0f, 0.0f,
+             0.25f, -0.25f, 0.0f,   0.0f, 1.0f, 0.0f,
+             0.25f,  0.25f, 0.0f,   0.0f, 0.0f, 1.0f,
+            -0.25f,  0.25f, 0.0f,   0.0f, 0.0f, 1.0f
+        };
+
+        GLuint vbo;
+        glGenBuffers(1, &vbo);
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
+
+        glGenVertexArrays(1, &m_vao);
+        glBindVertexArray(m_vao);
+
+        glBindVertexBuffer(0, vbo, 0, 6 * sizeof(GLfloat));
+        // position
+        glEnableVertexAttribArray(0);
+        glVertexAttribFormat(0, 3, GL_FLOAT, GL_FALSE, 0);
+        glVertexAttribBinding(0, 0);
+
+        // color
+        glEnableVertexAttribArray(1);
+        glVertexAttribFormat(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat));
+        glVertexAttribBinding(1, 0);
+
+#else
+        //vertex data
+        float positionData[] = {
+            -0.25f, -0.25f, 0.0f,
+            0.25f, -0.25f, 0.0f,
+            0.25f,  0.25f, 0.0f,
+            -0.25f,  0.25f, 0.0f
+        };
+
+        float colorData[] =
+        {
+            1.0f, 0.0f, 0.0f,
+            0.0f, 1.0f, 0.0f,
+            0.0f, 0.0f, 1.0f,
+            0.0f, 0.0f, 1.0f
+        };
+
+        GLuint vbo[2];
+        glGenBuffers(2, vbo);
+        glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(positionData), positionData, GL_STATIC_DRAW);
+        glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(colorData), colorData, GL_STATIC_DRAW);
+
+        glGenVertexArrays(1, &m_vao);
+        glBindVertexArray(m_vao);
+
+        // position
+        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+        glBindVertexBuffer(0, vbo[0], 0, 3 * sizeof(GLfloat));
+        // color
+        glEnableVertexAttribArray(1);
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+        glBindVertexBuffer(1, vbo[1], 0, 3 * sizeof(GLfloat));
+#endif // INTERLEAVE
+
         return true;
     }
 
-    void World01::Shutdown()
+    void World03::Shutdown()
     {
     }
 
-    void World01::Update(float dt)
+    void World03::Update(float dt)
     {
 
         m_angle += (ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_H) ? dt * 50 : 0);
@@ -49,43 +118,14 @@ namespace nc
         m_time += dt;
     }
 
-    void World01::Draw(Renderer& renderer)
+    void World03::Draw(Renderer& renderer)
     {
         // pre-render
         renderer.BeginFrame();
 
         // render
-        if (m_actualPoints.size() > 0) {
-            glPushMatrix();
-            glTranslatef(m_position.x, m_position.y, m_position.z);
-            if (!m_timerot) {
-                glRotatef(m_angle, m_angle_x, m_angle_y, m_angle_z);
-            }
-            else {
-                glRotatef(m_time * 50, m_angle_x, m_angle_y, m_angle_z);
-            }
-            glScalef(m_scale_x, m_scale_y, 1);
-
-            glBegin(GL_POLYGON);
-
-            for (int i = 0; i < m_actualPoints.size(); i++) {
-                if ((int)m_actualPoints[i].z == 1) {
-                    glColor3f(1, 0, 0);
-                }
-                else if ((int)m_actualPoints[i].z == 2) {
-
-                    glColor3f(0, 1, 0);
-                }
-                else {
-                    glColor3f(0, 0, 1);
-                }
-                glVertex2f(m_actualPoints[i].x, m_actualPoints[i].y);
-            }
-
-            glEnd();
-
-            glPopMatrix();
-        }
+        glBindVertexArray(m_vao);
+        glDrawArrays(GL_QUADS, 0, 4);
 
         // post-render
         renderer.EndFrame();

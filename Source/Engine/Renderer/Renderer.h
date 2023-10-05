@@ -4,7 +4,10 @@
 #include "Model.h"
 #include "Text.h"
 #include "Texture.h"
+#include "Shader.h"
+#include "Program.h"
 
+#include <glad/include/glad/glad.h>
 #include <SDL2-2.28.4/include/SDL.h>
 #include <string>
 
@@ -48,5 +51,6 @@ namespace nc
 
 		SDL_Renderer* m_renderer = nullptr;
 		SDL_Window* m_window = nullptr;
+		SDL_GLContext m_context = nullptr;
 	};
 }

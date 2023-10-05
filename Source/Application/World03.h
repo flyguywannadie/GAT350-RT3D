@@ -3,10 +3,11 @@
 #include "Core/Math/Vector2.h"
 #include "Core/Math/Vector3.h"
 #include <vector>
+#include "Renderer/Renderer.h"
 
 namespace nc
 {
-	class World01 : public World
+	class World03 : public World
 	{
 	public:
 		bool Initialize() override;
@@ -25,5 +26,8 @@ namespace nc
 		float m_scale_x = 1;
 		float m_scale_y = 1;
 		std::vector<vec3> m_actualPoints = { vec3{-0.5f,-0.5f, 1.0f},vec3{0.0f,0.5f, 2.0f},vec3{0.5f,-0.5, 3.0f} };
+		
+		GLuint m_vao = 0;
+		res_t<Program> m_program;
 	};
 }
