@@ -17,15 +17,9 @@ namespace nc
 
 	private:
 		float m_angle = 0;
-		float m_angle_x = 0;
-		float m_angle_y = 0;
-		float m_angle_z = 0;
-		float m_time;
-		bool m_timerot = false;
-		vec3 m_position;
-		float m_scale_x = 1;
-		float m_scale_y = 1;
-		std::vector<vec3> m_actualPoints = { vec3{-0.5f,-0.5f, 1.0f},vec3{0.0f,0.5f, 2.0f},vec3{0.5f,-0.5, 3.0f} };
+		float m_time = 0;
+		float m_speed = 10;
+		glm::vec3 m_position;
 		
 		GLuint m_vao = 0;
 		res_t<Program> m_program;

@@ -76,6 +76,8 @@ namespace nc
         glBindVertexBuffer(1, vbo[1], 0, 3 * sizeof(GLfloat));
 #endif // INTERLEAVE
 
+        m_position.z = -10;
+
         return true;
     }
 
@@ -85,37 +87,33 @@ namespace nc
 
     void World03::Update(float dt)
     {
-
-        m_angle += (ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_H) ? dt * 50 : 0);
-        m_angle += (ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_Y) ? -dt * 50 : 0);
-
-        if (ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_J)) { m_angle_x = 1; }
-        if (ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_U)) { m_angle_x = 0; }
-        if (ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_K)) { m_angle_y = 1; }
-        if (ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_I)) { m_angle_y = 0; }
-        if (ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_L)) { m_angle_z = 1; }
-        if (ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_O)) { m_angle_z = 0; }
-
-        m_position.x += (ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_D) ? dt : 0);
-        m_position.x += (ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_A) ? -dt : 0);
-        m_position.y += (ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_S) ? -dt : 0);
-        m_position.y += (ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_W) ? dt : 0);
-        m_position.z += (ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_Q) ? -dt : 0);
-        m_position.z += (ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_E) ? dt : 0);
-
-        if (ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_T) && !ENGINE.GetSystem<InputSystem>()->GetPreviousKeyDown(SDL_SCANCODE_T)) m_timerot = !m_timerot;
-
-        if (ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_Z)) { m_scale_x += dt; }
-        if (ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_X)) { m_scale_x += -dt; }
-        if (ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_C)) { m_scale_y += dt; }
-        if (ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_V)) { m_scale_y += -dt; }
-
-        if (ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_N) && !ENGINE.GetSystem<InputSystem>()->GetPreviousKeyDown(SDL_SCANCODE_N)) { 
-            m_actualPoints.push_back(vec3{-m_position.x,-m_position.y, (float)random(1,3)});
-        }
-        if (ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_M) && !ENGINE.GetSystem<InputSystem>()->GetPreviousKeyDown(SDL_SCANCODE_M)) { m_actualPoints.pop_back(); }
-
+        m_angle += 180 * dt;
+            
         m_time += dt;
+
+        m_position.x += (ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_D) ? dt * m_speed : 0);
+        m_position.x += (ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_A) ? -dt * m_speed : 0);
+        m_position.y += (ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_E) ? -dt * m_speed : 0);
+        m_position.y += (ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_Q) ? dt * m_speed : 0);
+        m_position.z += (ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_W) ? -dt * m_speed : 0);
+        m_position.z += (ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_S) ? dt * m_speed : 0);
+
+        // model matrix
+        glm::mat4 position = glm::translate(glm::mat4{ 1 }, m_position);
+        glm::mat4 rotation = glm::rotate(glm::mat4{ 1 }, glm::radians(m_angle), glm::vec3{0,0,1});
+        glm::mat4 model = position * rotation;
+        GLint uniform = glGetUniformLocation(m_program->m_program, "model");
+        glUniformMatrix4fv(uniform, 1, GL_FALSE, glm::value_ptr(model));
+
+        // view
+        glm::mat4 view = glm::lookAt(glm::vec3{ 0, 4, 5 }, glm::vec3{ 0, 0, 0 }, glm::vec3{ 0, 1, 0 });
+        uniform = glGetUniformLocation(m_program->m_program, "view");
+        glUniformMatrix4fv(uniform, 1, GL_FALSE, glm::value_ptr(view));
+
+        // projection
+        glm::mat4 projection = glm::perspective(glm::radians(70.0f), 800.0f / 600.0f, 0.01f, 1000.0f);
+        uniform = glGetUniformLocation(m_program->m_program, "projection");
+        glUniformMatrix4fv(uniform, 1, GL_FALSE, glm::value_ptr(projection));
     }
 
     void World03::Draw(Renderer& renderer)
