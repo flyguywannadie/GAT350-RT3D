@@ -1,7 +1,5 @@
 #pragma once
 #include "Framework/World.h"
-#include "Core/Math/Vector2.h"
-#include "Core/Math/Vector3.h"
 #include <vector>
 #include "Renderer/Renderer.h"
 
@@ -16,10 +14,10 @@ namespace nc
 		void Draw(Renderer& renderer) override;
 
 	private:
-		float m_angle = 0;
 		float m_time = 0;
-		float m_speed = 10;
-		glm::vec3 m_position;
+		float m_speed = 3.1;
+
+		Transform m_transform;
 		
 		GLuint m_vao = 0;
 		res_t<Program> m_program;
