@@ -58,9 +58,14 @@ namespace nc
         ENGINE.GetSystem<Gui>()->BeginFrame();
 
         ImGui::Begin("Transform");
-        ImGui::DragFloat3("Position", &m_transform.position[0]);
-        ImGui::DragFloat3("Rotation", &m_transform.rotation[0]);
-        ImGui::DragFloat3("Scale", &m_transform.scale[0]);
+        ImGui::DragFloat3("Position", &m_transform.position[0], 0.1f);
+        ImGui::DragFloat3("Rotation", &m_transform.rotation[0], 0.1f);
+        ImGui::DragFloat3("Scale", &m_transform.scale[0], 0.1f);
+        ImGui::End();
+
+        ImGui::Begin("UV");
+        ImGui::DragFloat2("Offset", &uvOffset[0], 0.01f);
+        ImGui::DragFloat2("Tiling", &uvTiling[0], 0.01f);
         ImGui::End();
 
         //m_transform.rotation.z += (180 * dt);
@@ -89,10 +94,10 @@ namespace nc
         m_program->SetUniform("projection", projection);
 
         // offset texture
-        m_program->SetUniform("offset", glm::vec2{ m_time, 0 });
+        m_program->SetUniform("offset", uvOffset);
 
         // tiling texture
-        m_program->SetUniform("tiling", glm::vec2{ m_time, 1 });
+        m_program->SetUniform("tiling", uvTiling);
 
         ENGINE.GetSystem<Gui>()->EndFrame();
     }

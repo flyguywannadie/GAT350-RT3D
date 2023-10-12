@@ -18,7 +18,9 @@ namespace nc
 		float m_speed = 3.1;
 
 		Transform m_transform;
-		
+		glm::vec2 uvOffset = { 1,1 };
+		glm::vec2 uvTiling = { 1,1 };
+
 		GLuint m_vao = 0;
 		res_t<Program> m_program;
 		res_t<Texture> m_texture;
