@@ -48,6 +48,12 @@ namespace nc
 		glTexStorage2D(m_target, 1, internalFormat, m_size.x, m_size.y);
 		glTexSubImage2D(m_target, 0, 0, 0, m_size.x, m_size.y, format, GL_UNSIGNED_BYTE, data);
 
+		glTexParameteri(m_target, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(m_target, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+		glTexParameteri(m_target, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(m_target, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
 		stbi_image_free(data);
 
 		return true;

@@ -60,7 +60,7 @@ namespace nc
 		}
 
 		// copy data into index buffer
-		glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
 	}
 		
 	void VertexBuffer::SetAttribute(int attribindex, GLint size, GLsizei stride, GLuint offset)
@@ -68,9 +68,9 @@ namespace nc
 		// size is number of elements (position = 3 (xyz), color = 3 (rgb), texcoord = 2 (uv))
 
 		// bind vertex buffer
-		glBindVertexBuffer(0, m_vbo, 0, stride);
+		glBindVertexBuffer(attribindex, m_vbo, offset, stride);
 		// enable vertex attribute (position, color, ...)
-		glEnableVertexAttribArray(0);
+		glEnableVertexAttribArray(attribindex);
 		// set vertex attribute format
 		glVertexAttribFormat(attribindex, size, GL_FLOAT, GL_FALSE, offset);
 		// bind vertex attribute index to vertex buffer
