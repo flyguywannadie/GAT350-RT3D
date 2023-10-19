@@ -28,6 +28,12 @@ namespace nc
         ImGui::DragFloat3("Scale", &m_transform.scale[0], 0.1f);
         ImGui::End();
 
+        ImGui::Begin("Light");
+        ImGui::DragFloat3("Position", &lightPosition[0], 0.1f);
+        ImGui::ColorEdit3("Ambient", &lightAmbient[0]);
+        ImGui::ColorEdit3("Diffuse", &lightDiffuse[0]);
+        ImGui::End();
+
         //m_transform.rotation.z += (180 * dt);
         m_time += dt;
 
@@ -51,6 +57,9 @@ namespace nc
         material->Bind();
 
         material->GetProgram()->SetUniform("model", m_transform.GetMatrix());
+        material->GetProgram()->SetUniform("light.position", lightPosition);
+        material->GetProgram()->SetUniform("ambientColor", lightAmbient);
+        material->GetProgram()->SetUniform("light.diffuseColor", lightDiffuse);
 
         // view
         glm::mat4 view = glm::lookAt(glm::vec3{ 0, 2, 4 }, glm::vec3{0,0,0}, glm::vec3{ 0, 1, 0 });

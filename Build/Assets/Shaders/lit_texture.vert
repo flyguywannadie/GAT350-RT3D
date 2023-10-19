@@ -22,12 +22,10 @@ uniform struct Material
 uniform struct Light
 {
 	vec3 position;
-	vec3 color;
+	vec3 diffuseColor;
 } light ;
 
-vec3 ambientLight = vec3(0.8,0.8,0.15);
-vec3 diffuseLight = vec3(1,1,1);
-vec3 lightPosition = vec3(0,8,0);
+uniform vec3 ambientColor = vec3(0.2, 0.2, 0.2);
 
 void main()
 {
@@ -37,10 +35,10 @@ void main()
 	mat4 modelView = view * model;
 	vec4 position = modelView * vec4(vposition,1);
 	vec3 normal = mat3(modelView) * vnormal;
-	vec3 lightDir = normalize(lightPosition - position.xyz);
+	vec3 lightDir = normalize(light.position - position.xyz);
 	float intensity = max(dot(lightDir, normal), 0);
 
-	vec3 lightColor = (diffuseLight * intensity) + ambientLight;
+	vec3 lightColor = (light.diffuseColor * intensity) + ambientColor;
 
 	ocolor = material.color * vec4(lightColor, 1);
 

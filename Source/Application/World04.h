@@ -17,8 +17,12 @@ namespace nc
 	private:
 		float m_time = 0;
 		float m_speed = 1.1f;
-
+		
 		Transform m_transform;
 		res_t<Model> m_model;
+
+		glm::vec3 lightPosition;
+		glm::vec3 lightAmbient;
+		glm::vec3 lightDiffuse;
 	};
 }
