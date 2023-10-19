@@ -9,7 +9,7 @@ namespace nc
         auto material = GET_RESOURCE(Material, "materials/grid.mtrl");
         m_model = std::make_shared<Model>();
         m_model->SetMaterial(material);
-        m_model->Load("models/Buddha.obj");
+        m_model->Load("models/Buddha.obj", glm::vec3{ 0 }, glm::vec3{ -90, 0 , 0 });
 
         return true;
     }
@@ -66,7 +66,8 @@ namespace nc
         material->GetProgram()->SetUniform("view", view);
 
         // projection
-        glm::mat4 projection = glm::perspective(glm::radians(70.0f), 800.0f / 600.0f, 0.01f, 1000.0f);
+        float aspectration = ((float)ENGINE.GetSystem<Renderer>()->GetWidth() / ENGINE.GetSystem<Renderer>()->GetHeight());
+        glm::mat4 projection = glm::perspective(glm::radians(70.0f), aspectration, 0.01f, 1000.0f);
         material->GetProgram()->SetUniform("projection", projection);
 
         ENGINE.GetSystem<Gui>()->EndFrame();
