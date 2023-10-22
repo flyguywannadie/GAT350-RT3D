@@ -46,7 +46,7 @@ namespace nc
 
 		m_program->SetUniform("material.diffuse", diffuse);
 		m_program->SetUniform("material.specular", specular);
-		m_program->SetUniform("material.shininess", shininess);
+		//m_program->SetUniform("material.shininess", shininess);
 		m_program->SetUniform("material.tiling", tiling);
 		m_program->SetUniform("material.offset", offset);
 
