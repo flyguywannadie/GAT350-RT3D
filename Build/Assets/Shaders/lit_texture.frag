@@ -1,5 +1,9 @@
 #version 430
 
+#define POINT 0
+#define DIRECTIONAL 1
+#define SPOT 2
+
 in layout(location = 0) vec3 fposition;
 in layout(location = 1) vec3 fnormal;
 in layout(location = 2) vec2 ftexcoord;
@@ -19,8 +23,11 @@ uniform struct Material
 
 uniform struct Light
 {
+	int type;
 	vec3 position;
+	vec3 direction;
 	vec3 diffuseColor;
+	float cutoff;
 } light ;
 
 uniform vec3 ambientColor = vec3(0.2, 0.2, 0.2);
@@ -32,10 +39,18 @@ vec3 ads(vec3 position, vec3 normal){
 	vec3 ambient = ambientColor;
 
 	// DIFFUSE LIGHT CALCULATION
-	vec3 lightDir = normalize(light.position - position);
+	vec3 lightDir = (light.type == DIRECTIONAL) ? normalize(-light.direction) : normalize(light.position - position);
+	
+	float spotIntensity = 1;
+	if (light.type == SPOT)
+	{
+		float angle = acos(dot(light.direction, -lightDir));
+		if (angle > light.cutoff) spotIntensity = 0;
+	}
+	
 	float intensity = max(dot(lightDir, normal), 0);
 
-	vec3 diffuse = material.diffuse * (light.diffuseColor * intensity);
+	vec3 diffuse = material.diffuse * (light.diffuseColor * intensity * spotIntensity);
 
 	// SPECULAR LIGHT CALCULATION
 	vec3 specular = vec3(0);

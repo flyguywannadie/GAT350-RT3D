@@ -9,7 +9,13 @@ namespace nc
         auto material = GET_RESOURCE(Material, "materials/grid.mtrl");
         m_model = std::make_shared<Model>();
         m_model->SetMaterial(material);
-        m_model->Load("models/buddha.obj", glm::vec3{ 0 }, glm::vec3{ -90, 0 , 0 });
+        m_model->Load("models/plane.obj", glm::vec3{ 0 }, glm::vec3{ 0, 0 , 0 });
+
+        m_light.type = light_t::lightType::Point;
+        m_light.position = glm::vec3{ 0,5,0 };
+        m_light.direction = glm::vec3{ 0,-1,0 };
+        m_light.color = glm::vec3{ 1,1,1 };
+        m_light.cutoff = 30.0f;
 
         return true;
     }
@@ -29,9 +35,15 @@ namespace nc
         ImGui::End();
 
         ImGui::Begin("Light");
-        ImGui::DragFloat3("Position", &lightPosition[0], 0.1f);
+        const char* types[] = {"Point", "Directional", "Spot"};
+        ImGui::Combo("Type", (int*)(&m_light.type), types, 3);
+
+        if (m_light.type != light_t::Directional)         ImGui::DragFloat3("Position", glm::value_ptr(m_light.position), 0.1f);
+        if (m_light.type != light_t::Point)  ImGui::DragFloat3("Direction", glm::value_ptr(m_light.direction), 0.1f);
+        if (m_light.type == light_t::Spot) ImGui::DragFloat("Cutoff", &m_light.cutoff, 1, 0, 90);
+
         ImGui::ColorEdit3("Ambient", &lightAmbient[0]);
-        ImGui::ColorEdit3("Diffuse", &lightDiffuse[0]);
+        ImGui::ColorEdit3("Diffuse", glm::value_ptr(m_light.color));
         ImGui::End();
 
         //m_transform.rotation.z += (180 * dt);
@@ -57,9 +69,12 @@ namespace nc
         material->Bind();
 
         material->GetProgram()->SetUniform("model", m_transform.GetMatrix());
-        material->GetProgram()->SetUniform("light.position", lightPosition);
+        material->GetProgram()->SetUniform("light.type", m_light.type);
+        material->GetProgram()->SetUniform("light.cutoff", glm::radians(m_light.cutoff));
+        material->GetProgram()->SetUniform("light.position", m_light.position);
+        material->GetProgram()->SetUniform("light.direction", m_light.direction);
         material->GetProgram()->SetUniform("ambientColor", lightAmbient);
-        material->GetProgram()->SetUniform("light.diffuseColor", lightDiffuse);
+        material->GetProgram()->SetUniform("light.diffuseColor", m_light.color);
 
         // view
         glm::mat4 view = glm::lookAt(glm::vec3{ 0, 2, 4 }, glm::vec3{0,0,0}, glm::vec3{ 0, 1, 0 });
