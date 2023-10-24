@@ -31,25 +31,16 @@ uniform struct Light
 	float outerAngle;
 	float intensity;
 	float range;
-} light ;
+} lights[3];
+
+uniform int numLights = 3;
 
 uniform vec3 ambientColor = vec3(0.2, 0.2, 0.2);
 
 layout(binding = 0) uniform sampler2D tex;
 
-vec3 ads(vec3 position, vec3 normal){
-	// AMBIENT LIGHT CALCULATION
-	vec3 ambient = ambientColor;
-
-	// ATTENUATION
-	float attenuation = 1;
-	if (light.type !=  DIRECTIONAL) {
-		float distanceSqr = dot(light.position - position, light.position - position);
-		float rangeSqr = pow(light.range, 2.0);
-		attenuation = max(0, 1 - pow((distanceSqr/rangeSqr), 2.0));
-		attenuation = pow(attenuation, 2.0);
-	}
-
+void phong(in Light light, in vec3 position, in vec3 normal, out vec3 diffuse, out vec3 specular){
+	
 	// DIFFUSE LIGHT CALCULATION
 	vec3 lightDir = (light.type == DIRECTIONAL) ? normalize(-light.direction) : normalize(light.position - position);
 	
@@ -63,10 +54,10 @@ vec3 ads(vec3 position, vec3 normal){
 	
 	float intensity = max(dot(lightDir, normal), 0) * spotIntensity;
 
-	vec3 diffuse = material.diffuse * (light.diffuseColor * intensity) * light.intensity;
+	diffuse = material.diffuse * (light.diffuseColor * intensity) * light.intensity;
 
 	// SPECULAR LIGHT CALCULATION
-	vec3 specular = vec3(0);
+	specular = vec3(0);
 	if (intensity > 0) {
 		vec3 reflection = reflect(-lightDir, normal);
 		vec3 viewDir = normalize(-position);
@@ -74,14 +65,39 @@ vec3 ads(vec3 position, vec3 normal){
 		intensity = pow(intensity, material.shininess);
 		specular = material.specular * intensity * light.intensity;
 	}
+}
+
+/*
+vec3 ads(vec3 position, vec3 normal){
+	// AMBIENT LIGHT CALCULATION
+	vec3 ambient = ambientColor;
+
+	// ATTENUATION
+	float attenuation = 1;
+	if (light.type !=  DIRECTIONAL) {
+		float distanceSqr = dot(light.position - position, light.position - position);
+		float rangeSqr = pow(light.range, 2.0);
+		attenuation = max(0, 1 - pow((distanceSqr/rangeSqr), 2.0));
+		attenuation = pow(attenuation, 2.0);
+	}
 
 	return ambient + ((diffuse + specular) * attenuation);
 }
+*/
 
 void main()
 {
 	vec4 texColor = texture(tex,ftexcoord);
 	//if (texColor.a < 0.8) discard;
 	//combines the texture color with the ads return color
-	ocolor = texColor * vec4(ads(fposition, fnormal), 1);
+
+	ocolor = vec4(ambientColor,1 );
+
+	for (int i = 0; i < numLights; i++) {
+		vec3 diffuse;
+		vec3 specular;
+
+		phong(lights[i], fposition, fnormal, diffuse, specular);
+		ocolor += (vec4(diffuse, 1) * texColor) + vec4(specular, 1);
+	}
 }
