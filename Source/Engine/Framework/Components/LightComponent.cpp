@@ -19,7 +19,7 @@ namespace nc
 		program->SetUniform(name + ".type", type);
 		program->SetUniform(name + ".position", m_owner->transform.position);
 		program->SetUniform(name + ".direction", m_owner->transform.Forward());
-		program->SetUniform(name + ".color", color);
+		program->SetUniform(name + ".diffuseColor", color);
 		program->SetUniform(name + ".intensity", intensity);
 		program->SetUniform(name + ".range", range);
 		program->SetUniform(name + ".innerAngle", glm::radians(innerAngle));

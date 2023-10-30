@@ -12,6 +12,7 @@
 #include "Components/LightComponent.h"
 #include "Components/PhysicsComponent.h"
 #include "Components/EnginePhysicsComponent.h"
+#include "Components/CameraComponent.h"
 
 #include "Components/CollisionComponent.h"
 
