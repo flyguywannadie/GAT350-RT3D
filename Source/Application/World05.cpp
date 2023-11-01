@@ -52,8 +52,8 @@ namespace nc
         {
             auto actor = CREATE_CLASS(Actor);
             actor->name = "camera1";
-            actor->transform.position = glm::vec3{ 0, 0, 3 };
-            actor->transform.rotation = glm::radians(glm::vec3{ 0, 180, 0 });
+            actor->transform.position = glm::vec3{ 0, 0, 0 };
+            actor->transform.rotation = glm::vec3{ 0, 180, 0 };
 
             auto cameraComponent = CREATE_CLASS(CameraComponent);
             cameraComponent->SetPerspective(70.0f, ENGINE.GetSystem<Renderer>()->GetWidth() / (float)ENGINE.GetSystem<Renderer>()->GetHeight(), 0.1f, 100.0f);
