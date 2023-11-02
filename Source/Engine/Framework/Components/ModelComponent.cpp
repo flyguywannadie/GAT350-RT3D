@@ -22,6 +22,11 @@ namespace nc
 		return true;
 	}
 
+	void ModelComponent::ProcessGui() {
+		auto material = model->GetMaterial();
+		material->ProcessGui();
+	}
+
 	void ModelComponent::Update(float dt)
 	{
 	}

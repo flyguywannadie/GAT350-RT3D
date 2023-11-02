@@ -92,10 +92,21 @@ namespace nc
 
         // texture tiling and offset
         auto material = actor->GetComponent<ModelComponent>()->model->GetMaterial();
-        material->ProcessGui();
+        ///material->ProcessGui();
         material->Bind();
 
         material->GetProgram()->SetUniform("ambientColor", lightAmbient);
+
+        material = GET_RESOURCE(Material, "materials/refraction.mtrl");
+        if (material) {
+            ImGui::Begin("Refraction");
+            ImGui::DragFloat("IOR", &m_refraction, 0.01f, 1, 3);
+            auto program = material->GetProgram();
+            program->Use();
+            program->SetUniform("ior", m_refraction);
+
+            ImGui::End();
+        }
 
         ENGINE.GetSystem<Gui>()->EndFrame();
     }

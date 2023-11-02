@@ -12,6 +12,7 @@ namespace nc
 		bool Initialize() override;
 		void Update(float dt) override;
 		void Draw(class Renderer& renderer) override;
+		void ProcessGui();
 
 		//virtual float GetRadius() override { return m_model->GetRadius(); }
 
