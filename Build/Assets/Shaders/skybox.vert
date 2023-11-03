@@ -14,5 +14,4 @@ void main()
 
 	mat4 vp = projection * mat4(mat3(view));
 	gl_Position = vp * vec4(position , 1.0);
-
 }

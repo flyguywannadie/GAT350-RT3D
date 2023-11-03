@@ -25,6 +25,7 @@ namespace nc
 	void ModelComponent::ProcessGui() {
 		auto material = model->GetMaterial();
 		material->ProcessGui();
+		material->Bind();
 	}
 
 	void ModelComponent::Update(float dt)

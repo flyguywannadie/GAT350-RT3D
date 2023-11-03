@@ -76,28 +76,28 @@ namespace nc
         m_scene->Update(dt);
         m_scene->ProcessGui();
 
-        auto actor = m_scene->GetActorByName<Actor>("actor1");
+        //auto actor = m_scene->GetActorByName<Actor>("actor1");
 
         //actor->transform.rotation.z += (180 * dt);
         //m_time += dt;
 
-        actor->transform.position.x += (ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_D) ? -dt * m_speed : 0);
-        actor->transform.position.x += (ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_A) ? dt * m_speed : 0);
-        actor->transform.position.z += (ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_W) ? -dt * m_speed : 0);
-        actor->transform.position.z += (ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_S) ? dt * m_speed : 0);
+        //actor->transform.position.x += (ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_D) ? -dt * m_speed : 0);
+        //actor->transform.position.x += (ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_A) ? dt * m_speed : 0);
+        //actor->transform.position.z += (ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_W) ? -dt * m_speed : 0);
+        //actor->transform.position.z += (ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_S) ? dt * m_speed : 0);
 
        // m_transform.rotation.x += dt * 100;
         //m_transform.rotation.y += dt * 100;
         //m_transform.rotation.z += dt * 100;
 
         // texture tiling and offset
-        auto material = actor->GetComponent<ModelComponent>()->model->GetMaterial();
+        //auto material = actor->GetComponent<ModelComponent>()->model->GetMaterial();
         ///material->ProcessGui();
-        material->Bind();
+        //material->Bind();
 
-        material->GetProgram()->SetUniform("ambientColor", lightAmbient);
+        //material->GetProgram()->SetUniform("ambientColor", lightAmbient);
 
-        material = GET_RESOURCE(Material, "materials/refraction.mtrl");
+        auto material = GET_RESOURCE(Material, "materials/refraction.mtrl");
         if (material) {
             ImGui::Begin("Refraction");
             ImGui::DragFloat("IOR", &m_refraction, 0.01f, 1, 3);
