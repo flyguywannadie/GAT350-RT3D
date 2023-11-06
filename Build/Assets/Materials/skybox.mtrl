@@ -2,11 +2,11 @@
   "program": "shaders/skybox.prog",
   "cubemap": "night_cubemap",
   "cubemaps": [
-    "textures/night_cubemap/posx.jpg",
-    "textures/night_cubemap/negx.jpg",
-    "textures/night_cubemap/posy.jpg",
-    "textures/night_cubemap/negy.jpg",
-    "textures/night_cubemap/posz.jpg",
-    "textures/night_cubemap/negz.jpg"
+    "textures/bridge2/posx.jpg",
+    "textures/bridge2/negx.jpg",
+    "textures/bridge2/posy.jpg",
+    "textures/bridge2/negy.jpg",
+    "textures/bridge2/posz.jpg",
+    "textures/bridge2/negz.jpg"
   ]
 }
