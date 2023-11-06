@@ -1,7 +1,6 @@
 #pragma once
 #include "Framework/World.h"
-#include "Core/Math/Vector2.h"
-#include "Core/Math/Vector3.h"
+#include "glm/glm/glm.hpp"
 #include <vector>
 #include "Renderer/Renderer.h"
 
@@ -22,10 +21,10 @@ namespace nc
 		float m_angle_z = 0;
 		float m_time;
 		bool m_timerot = false;
-		vec3 m_position;
+		glm::vec3 m_position;
 		float m_scale_x = 1;
 		float m_scale_y = 1;
-		std::vector<vec3> m_actualPoints = { vec3{-0.5f,-0.5f, 1.0f},vec3{0.0f,0.5f, 2.0f},vec3{0.5f,-0.5, 3.0f} };
+		std::vector<glm::vec3> m_actualPoints = { glm::vec3{-0.5f,-0.5f, 1.0f},glm::vec3{0.0f,0.5f, 2.0f},glm::vec3{0.5f,-0.5, 3.0f} };
 		GLuint m_vao;
 	};
 }

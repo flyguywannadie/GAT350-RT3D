@@ -41,6 +41,7 @@ namespace nc
 
 		Transform m_transform;
 		res_t<Model> m_model;
+		res_t<Material> m_material;
 
 		glm::vec3 lightAmbient = {0.5f, 0.5f, 0.5f};
 	};

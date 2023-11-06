@@ -42,7 +42,7 @@ namespace nc
         if (ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_V)) { m_scale_y += -dt; }
 
         if (ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_N) && !ENGINE.GetSystem<InputSystem>()->GetPreviousKeyDown(SDL_SCANCODE_N)) { 
-            m_actualPoints.push_back(vec3{-m_position.x,-m_position.y, (float)random(1,3)});
+            m_actualPoints.push_back(glm::vec3{-m_position.x,-m_position.y, (float)random(1,3)});
         }
         if (ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_M) && !ENGINE.GetSystem<InputSystem>()->GetPreviousKeyDown(SDL_SCANCODE_M)) { m_actualPoints.pop_back(); }
 

@@ -10,20 +10,17 @@ namespace nc
 	{
 		if (!modelName.empty())
 		{
-			model = std::make_shared<Model>();
-			model->Load(modelName);
-			//ADD_RESOURCE(modelName, model);
+			model = GET_RESOURCE(Model, modelName);
 		}
 		if (model && !materialName.empty())
 		{
-			model->SetMaterial(GET_RESOURCE(Material, materialName));
+			material = GET_RESOURCE(Material, materialName);
 		}
 
 		return true;
 	}
 
 	void ModelComponent::ProcessGui() {
-		auto material = model->GetMaterial();
 		material->ProcessGui();
 		material->Bind();
 	}
@@ -34,7 +31,6 @@ namespace nc
 
 	void ModelComponent::Draw(Renderer& renderer)
 	{
-		auto material = model->GetMaterial();
 		material->Bind();
 		material->GetProgram()->SetUniform("model", m_owner->transform.GetMatrix());
 

@@ -53,11 +53,18 @@ namespace nc
             auto actor = CREATE_CLASS(Actor);
             actor->name = "camera1";
             actor->transform.position = glm::vec3{ 0, 0, 0 };
-            actor->transform.rotation = glm::vec3{ 0, 180, 0 };
+            actor->transform.rotation = glm::radians(glm::vec3{ 0, 180, 0 });
 
             auto cameraComponent = CREATE_CLASS(CameraComponent);
             cameraComponent->SetPerspective(70.0f, ENGINE.GetSystem<Renderer>()->GetWidth() / (float)ENGINE.GetSystem<Renderer>()->GetHeight(), 0.1f, 100.0f);
             actor->AddComponent(std::move(cameraComponent));
+
+            auto cameraController = CREATE_CLASS(CameraController);
+            cameraController->speed = 5;
+            cameraController->sensitivity = 0.5f;
+            cameraController->m_owner = actor.get();
+            cameraController->Initialize();
+            actor->AddComponent(std::move(cameraController));
 
             m_scene->Add(std::move(actor));
         }
@@ -92,7 +99,7 @@ namespace nc
 
         // texture tiling and offset
         //auto material = actor->GetComponent<ModelComponent>()->model->GetMaterial();
-        ///material->ProcessGui();
+        //material->ProcessGui();
         //material->Bind();
 
         //material->GetProgram()->SetUniform("ambientColor", lightAmbient);

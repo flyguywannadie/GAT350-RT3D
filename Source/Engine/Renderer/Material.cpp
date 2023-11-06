@@ -81,9 +81,7 @@ namespace nc
 	{
 		m_program->Use();
 
-
 		m_program->SetUniform("material.params", params);
-
 		m_program->SetUniform("material.albedo", albedo);
 		m_program->SetUniform("material.specular", specular);
 		m_program->SetUniform("material.emissive", emissive);
@@ -106,6 +104,10 @@ namespace nc
 		if (emissiveTexture) {
 			emissiveTexture->SetActive(GL_TEXTURE3);
 			emissiveTexture->Bind();
+		}
+		if (cubemapTexture) {
+			cubemapTexture->SetActive(GL_TEXTURE4);
+			cubemapTexture->Bind();
 		}
 	}
 	void Material::ProcessGui()
