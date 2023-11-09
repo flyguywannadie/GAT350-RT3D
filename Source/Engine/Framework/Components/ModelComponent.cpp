@@ -51,6 +51,8 @@ namespace nc
 		READ_NAME_DATA(value, "cullface", cullfacename);
 		if (IsEqualIgnoreCase(cullfacename, "front")) {
 			cullface = GL_FRONT;
+		} else if (IsEqualIgnoreCase(cullfacename, "back")) {
+			cullface = GL_BACK;
 		}
 	}
 }

@@ -68,6 +68,15 @@ namespace nc
 
             m_scene->Add(std::move(actor));
         }
+        for (int i = 0; i < 5; i++) {
+            auto actor = CREATE_CLASS_BASE(Actor, "Tree");
+            actor->name = "Tree" +  std::to_string(i+1);
+            actor->transform.scale = glm::vec3(randomf(0.5f, 3.5f), randomf(0.5f, 3.5f), 0);
+            actor->transform.position = glm::vec3{ randomf(-10, 10), actor->transform.scale.y, randomf(-10, 10) };
+            actor->Initialize();
+
+            m_scene->Add(std::move(actor));
+        }
 
         return true;
     }

@@ -1,0 +1,84 @@
+{
+	"actors": [
+		{
+			"type": "Actor",
+			"name": "Ogre_ogre",
+			"persistent": true,
+			"active": true,
+			"transform": {
+				"position": [ 0, 0, -3 ],
+				"scale": [ 1, 1, 1 ],
+				"eulerAngles": [ 0, 0, 0 ]
+			},
+			"components": [
+				{
+					"type": "ModelComponent",
+					"modelName": "models/ogre.obj",
+					"materialName": "materials/ogre.mtrl"
+				},
+				{
+					"type": "RotateComponent",
+					"rotation": [0,60,0]
+				}
+			]
+		},
+		{
+			"type": "Actor",
+			"name": "cube",
+			"persistent": true,
+			"active": true,
+			"transform": {
+				"position": [ 2, 0, -2 ],
+				"scale": [ 1, 1, 1 ],
+				"eulerAngles": [ 0, 0, 0 ]
+			},
+			"components": [
+				{
+					"type": "ModelComponent",
+					"modelName": "models/cube.obj",
+					"materialName": "materials/framebuffer.mtrl"
+				}
+			]
+		},
+		{
+			"type": "Actor",
+			"name": "Light",
+			"persistent": true,
+			"active": true,
+			"transform": {
+				"position": [ 0, 0, 0 ],
+				"scale": [ 1, 1, 1 ],
+				"eulerAngles": [ 0, 0, 0 ]
+			},
+			"components": [
+				{
+					"type": "LightComponent",
+					"lightType": "point",
+					"color": [ 0.8, 0.8, 0.8 ],
+					"intensity": 0.5,
+					"range": 20
+				}
+			]
+		},
+		{
+			"type": "Actor",
+			"name": "Camera",
+			"persistent": true,
+			"active": true,
+			"transform": {
+				"position": [ 0, 0, 0 ],
+				"scale": [ 1, 1, 1 ],
+				"eulerAngles": [ 0, 180, 0 ]
+			},
+			"components": [
+				{
+					"type": "CameraComponent"
+				},
+				{
+					"type": "CameraController",
+					"sensitivity": 0.7
+				}
+			]
+		}
+	]
+}
