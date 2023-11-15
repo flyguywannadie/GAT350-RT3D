@@ -2,6 +2,26 @@
 	"actors": [
 		{
 			"type": "Actor",
+			"name": "Camera",
+			"persistent": true,
+			"active": true,
+			"transform": {
+				"position": [ 0, 0, 0 ],
+				"scale": [ 1, 1, 1 ],
+				"eulerAngles": [ 0, 180, 0 ]
+			},
+			"components": [
+				{
+					"type": "CameraComponent"
+				},
+				{
+					"type": "CameraController",
+					"sensitivity": 0.7
+				}
+			]
+		},
+		{
+			"type": "Actor",
 			"name": "Ogre_ogre",
 			"persistent": true,
 			"active": true,
@@ -17,26 +37,20 @@
 					"materialName": "materials/ogre.mtrl"
 				},
 				{
-					"type": "RotateComponent",
-					"rotation": [0,60,0]
+					"type": "CameraComponent"
 				}
 			]
 		},
 		{
 			"type": "Actor",
-			"name": "cube",
+			"name": "postprocess",
 			"persistent": true,
 			"active": true,
-			"transform": {
-				"position": [ 2, 0, -2 ],
-				"scale": [ 1, 1, 1 ],
-				"eulerAngles": [ 0, 0, 0 ]
-			},
 			"components": [
 				{
 					"type": "ModelComponent",
-					"modelName": "models/cube.obj",
-					"materialName": "materials/framebuffer.mtrl"
+					"modelName": "models/quad.obj",
+					"materialName": "materials/postprocess.mtrl"
 				}
 			]
 		},
@@ -57,26 +71,6 @@
 					"color": [ 0.8, 0.8, 0.8 ],
 					"intensity": 0.5,
 					"range": 20
-				}
-			]
-		},
-		{
-			"type": "Actor",
-			"name": "Camera",
-			"persistent": true,
-			"active": true,
-			"transform": {
-				"position": [ 0, 0, 0 ],
-				"scale": [ 1, 1, 1 ],
-				"eulerAngles": [ 0, 180, 0 ]
-			},
-			"components": [
-				{
-					"type": "CameraComponent"
-				},
-				{
-					"type": "CameraController",
-					"sensitivity": 0.7
 				}
 			]
 		}

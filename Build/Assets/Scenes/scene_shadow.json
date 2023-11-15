@@ -1,0 +1,130 @@
+{
+	"actors": [
+		{
+			"type": "Actor",
+			"name": "Camera",
+			"persistent": true,
+			"active": true,
+			"transform": {
+				"position": [ 0, 0, 0 ],
+				"scale": [ 1, 1, 1 ],
+				"eulerAngles": [ 0, 180, 0 ]
+			},
+			"components": [
+				{
+					"type": "CameraComponent"
+				},
+				{
+					"type": "CameraController",
+					"sensitivity": 0.7
+				}
+			]
+		},
+		{
+			"type": "Actor",
+			"name": "actor",
+			"persistent": true,
+			"active": true,
+			"transform": {
+				"position": [ 0, 0, -3 ],
+				"scale": [ 0.1, 0.1, 0.1 ],
+				"eulerAngles": [ 0, 0, 0 ]
+			},
+			"components": [
+				{
+					"type": "ModelComponent",
+					"modelName": "fantasy/obj/SF_Bld_Castle_Gate_03.obj",
+					"materialName": "materials/fantasy.mtrl"
+				}
+			]
+		},
+		{
+			"type": "Actor",
+			"name": "blacksmith",
+			"persistent": true,
+			"active": true,
+			"transform": {
+				"position": [ 3, 0, -3 ],
+				"scale": [ 0.1, 0.1, 0.1 ],
+				"eulerAngles": [ 0, 0, 0 ]
+			},
+			"components": [
+				{
+					"type": "ModelComponent",
+					"modelName": "fantasy/fbx/SF_Bld_House_Blacksmith_01.fbx",
+					"materialName": "materials/fantasy.mtrl"
+				}
+			]
+		},
+		{
+			"type": "Actor",
+			"name": "ground",
+			"persistent": true,
+			"active": true,
+			"transform": {
+				"position": [ -4, 0, 0 ],
+				"scale": [ 2, 1, 2 ],
+				"eulerAngles": [ 0, 0, 0 ]
+			},
+			"components": [
+				{
+					"type": "ModelComponent",
+					"modelName": "fantasy/obj/SF_Env_Tile_Water_01.obj",
+					"materialName": "materials/fantasy.mtrl"
+				}
+			]
+		},
+		{
+			"type": "Actor",
+			"name": "depth debug",
+			"persistent": true,
+			"transform": {
+				"position": [ 0, 0, 0 ],
+				"scale": [ 1, 1, 1 ],
+				"eulerAngles": [ 0, 0, 0 ]
+			},
+			"components": [
+				{
+					"type": "ModelComponent",
+					"modelName": "models/quad.obj",
+					"materialName": "materials/sprite.mtrl"
+				}
+			]
+		},
+		{
+			"type": "Actor",
+			"name": "postprocess",
+			"persistent": true,
+			"active": false,
+			"components": [
+				{
+					"type": "ModelComponent",
+					"modelName": "models/quad.obj",
+					"materialName": "materials/postprocess.mtrl"
+				}
+			]
+		},
+		{
+			"type": "Actor",
+			"name": "Light",
+			"persistent": true,
+			"active": true,
+			"transform": {
+				"position": [ 0, 3, 0 ],
+				"eulerAngles": [ 90, 0, 0 ]
+			},
+			"components": [
+				{
+					"type": "LightComponent",
+					"lightType": "directional",
+					"color": [ 1, 1, 1 ],
+					"intensity": 1,
+					"range": 20,
+					"innerAngle": 10,
+					"outerAngle": 30,
+					"castShadow":  true
+				}
+			]
+		}
+	]
+}

@@ -126,4 +126,6 @@ void main()
 		phong(lights[i], fposition, fnormal, diffuse, specular);
 		ocolor += ((vec4(diffuse, 1) * albedoColor) + (vec4(specular, 1) * specularColor)) * lights[i].intensity * attenuation;
 	}
+
+	ocolor = albedoColor;
 }
