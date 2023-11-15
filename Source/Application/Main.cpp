@@ -25,7 +25,7 @@ int main(int argc, char* argv[])
 	world->Initialize();
 
 	// main loop
-	bool quit = false;
+	bool quit = true;
 	while (!quit)
 	{
 		// update
