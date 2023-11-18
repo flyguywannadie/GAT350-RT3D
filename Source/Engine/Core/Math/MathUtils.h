@@ -56,7 +56,7 @@ namespace nc
 	constexpr T ClearBits(T a, T b) { return a & ~b; }
 
 	template<typename T>
-	constexpr T TestBits(T a, T b) { return a == b; }
+	constexpr T TestBits(T a, T b) { return bool(a & b); }
 
 	template<typename T>
 	constexpr T ToggleBits(T a, T b) { return a ^ b; }

@@ -11,7 +11,7 @@ namespace nc
 
 		bool Initialize() override;
 		void Update(float dt) override;
-		void SetProgram(const res_t<Program> program, const std::string& name);
+		void SetProgram(const res_t<Program> program, const std::string& name, const glm::mat4& view);
 
 		void ProcessGui() override;
 
@@ -35,5 +35,9 @@ namespace nc
 		bool castShadow = false;
 		float shadowSize = 10;
 		float shadowBias = 0.005f;
+
+		int celLevels = 4;
+		float celSpecularCutoff = 0.3;
+		float celOutline = 0.5;
 	};
 }

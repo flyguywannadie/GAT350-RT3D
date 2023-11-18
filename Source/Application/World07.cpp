@@ -25,6 +25,11 @@ namespace nc
             material->albedoTexture = texture;
         }
 
+        auto materials = GET_RESOURCES(Material);
+        for (auto mat : materials) {
+            material->depthTexture = texture;
+        }
+
         return true;
     }
 
@@ -46,6 +51,7 @@ namespace nc
     {
 
         // ***PASS 1*** //
+
         auto framebuffer = GET_RESOURCE(Framebuffer, "depth_buffer");
         renderer.SetViewport(framebuffer->GetSize().x, framebuffer->GetSize().y);
         framebuffer->Bind();
@@ -64,8 +70,11 @@ namespace nc
 
         auto models = m_scene->GetComponents<ModelComponent>();
         for (auto model : models) {
-            program->SetUniform("model", model->m_owner->transform.GetMatrix());
-            model->model->Draw();
+            if (model->castShadow) {
+                glCullFace(GL_FRONT);
+                program->SetUniform("model", model->m_owner->transform.GetMatrix());
+                model->model->Draw();
+            }
         }
 
         framebuffer->Unbind();
@@ -79,5 +88,6 @@ namespace nc
 
         // post-render
         renderer.EndFrame();
+        m_scene->GetActorByName("depth debug")->active = false;
     }
 }

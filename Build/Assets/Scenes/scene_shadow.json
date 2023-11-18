@@ -52,7 +52,7 @@
 				{
 					"type": "ModelComponent",
 					"modelName": "fantasy/fbx/SF_Bld_House_Blacksmith_01.fbx",
-					"materialName": "materials/fantasy.mtrl"
+					"materialName": "materials/cel.mtrl"
 				}
 			]
 		},
@@ -76,8 +76,51 @@
 		},
 		{
 			"type": "Actor",
+			"name": "Ogre_ogre",
+			"persistent": true,
+			"active": true,
+			"transform": {
+				"position": [ 0, 0, -3 ],
+				"scale": [ 1, 1, 1 ],
+				"eulerAngles": [ 0, 0, 0 ]
+			},
+			"components": [
+				{
+					"type": "ModelComponent",
+					"modelName": "models/ogre.obj",
+					"materialName": "materials/cel.mtrl"
+				},
+				{
+					"type": "CameraComponent"
+				}
+			]
+		},
+		{
+			"type": "Actor",
+			"name": "sphere",
+			"persistent": true,
+			"active": true,
+			"transform": {
+				"position": [ 0, 0, -3 ],
+				"scale": [ 1, 1, 1 ],
+				"eulerAngles": [ 0, 0, 0 ]
+			},
+			"components": [
+				{
+					"type": "ModelComponent",
+					"modelName": "models/sphere.obj",
+					"materialName": "materials/cel.mtrl"
+				},
+				{
+					"type": "CameraComponent"
+				}
+			]
+		},
+		{
+			"type": "Actor",
 			"name": "depth debug",
 			"persistent": true,
+			"active": true,
 			"transform": {
 				"position": [ 0, 0, 0 ],
 				"scale": [ 1, 1, 1 ],
@@ -93,25 +136,13 @@
 		},
 		{
 			"type": "Actor",
-			"name": "postprocess",
-			"persistent": true,
-			"active": false,
-			"components": [
-				{
-					"type": "ModelComponent",
-					"modelName": "models/quad.obj",
-					"materialName": "materials/postprocess.mtrl"
-				}
-			]
-		},
-		{
-			"type": "Actor",
 			"name": "Light",
 			"persistent": true,
 			"active": true,
 			"transform": {
 				"position": [ 0, 3, 0 ],
-				"eulerAngles": [ 90, 0, 0 ]
+				"eulerAngles": [ 90, 0, 0 ],
+				"scale": [ 0.1, 0.1, 0.1 ]
 			},
 			"components": [
 				{
@@ -122,7 +153,25 @@
 					"range": 20,
 					"innerAngle": 10,
 					"outerAngle": 30,
-					"castShadow":  true
+					"castShadow": true
+				},
+				{
+					"type": "ModelComponent",
+					"modelName": "models/quad.obj",
+					"materialName": "materials/uilight.mtrl"
+				}
+			]
+		},
+		{
+			"type": "Actor",
+			"name": "postprocess",
+			"persistent": true,
+			"active": false,
+			"components": [
+				{
+					"type": "ModelComponent",
+					"modelName": "models/quad.obj",
+					"materialName": "materials/postprocess.mtrl"
 				}
 			]
 		}

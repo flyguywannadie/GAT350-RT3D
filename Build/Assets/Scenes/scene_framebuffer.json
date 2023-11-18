@@ -43,6 +43,27 @@
 		},
 		{
 			"type": "Actor",
+			"name": "Ground",
+			"persistent": true,
+			"active": true,
+			"transform": {
+				"position": [ 0, -1, 0 ],
+				"scale": [ 10, 10, 10 ],
+				"eulerAngles": [ -90, 0, 0 ]
+			},
+			"components": [
+				{
+					"type": "ModelComponent",
+					"modelName": "models/quad.obj",
+					"materialName": "materials/fantasy.mtrl"
+				},
+				{
+					"type": "CameraComponent"
+				}
+			]
+		},
+		{
+			"type": "Actor",
 			"name": "postprocess",
 			"persistent": true,
 			"active": true,
@@ -71,6 +92,11 @@
 					"color": [ 0.8, 0.8, 0.8 ],
 					"intensity": 0.5,
 					"range": 20
+				},
+				{
+					"type": "ModelComponent",
+					"modelName": "models/quad.obj",
+					"materialName": "materials/uilight.mtrl"
 				}
 			]
 		}
