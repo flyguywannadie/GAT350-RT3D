@@ -35,9 +35,5 @@ namespace nc
 		bool castShadow = false;
 		float shadowSize = 10;
 		float shadowBias = 0.005f;
-
-		int celLevels = 4;
-		float celSpecularCutoff = 0.3;
-		float celOutline = 0.5;
 	};
 }

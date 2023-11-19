@@ -40,10 +40,6 @@ namespace nc
 			program->SetUniform("shadowVP", bias * GetShadowMatrix());
 			program->SetUniform("shadowBias", shadowBias);
 		}
-
-		program->SetUniform("celLevels", celLevels);
-		program->SetUniform("celSpecularCutoff", celSpecularCutoff);
-		program->SetUniform("celOutline", celOutline);
 	}
 
 	void LightComponent::ProcessGui()
@@ -66,11 +62,6 @@ namespace nc
 			ImGui::DragFloat("Shadow Size", &shadowSize, 0.1f, 1, 60);
 			ImGui::DragFloat("Shadow Bias", &shadowBias, 0.001f, 0, 0.5f);
 		}
-
-		ImGui::Text("Cel Shading");
-		ImGui::SliderInt("Cel Levels", &celLevels, 1, 10);
-		ImGui::SliderFloat("Specular Cutoff", &celSpecularCutoff, 0, 1);
-		ImGui::SliderFloat("Cel Outline", &celOutline, 0, 1);
 	}
 
 	glm::mat4 LightComponent::GetShadowMatrix()

@@ -8,7 +8,7 @@ out layout(location = 0) vec3 oposition;
 out layout(location = 1) vec3 onormal;
 out layout(location = 2) vec2 otexcoord;
 out layout(location = 3) vec4 oshadowcoord;
-out layout(location = 4) vec3 oviewdir; 
+out layout(location = 4) vec3 oviewdir;  // make a view direction for the outline
 
 uniform mat4 model;
 uniform mat4 view;
@@ -37,7 +37,7 @@ void main()
 	onormal = normalize(mat3(modelView) * vnormal);
 	oposition = vec3(modelView * vec4(vposition, 1));
 
-	oviewdir = normalize(-oposition);
+	oviewdir = normalize(-oposition); // set view direction
 
 	oshadowcoord = shadowVP * model * vec4(vposition, 1);
 

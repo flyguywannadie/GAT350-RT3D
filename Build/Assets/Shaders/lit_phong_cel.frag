@@ -13,7 +13,7 @@ in layout(location = 0) vec3 fposition;
 in layout(location = 1) vec3 fnormal;
 in layout(location = 2) vec2 ftexcoord;
 in layout(location = 3) vec4 fshadowcoord;
-in layout(location = 4) vec3 fviewdir; 
+in layout(location = 4) vec3 fviewdir; // get a view direction for the outline
 
 out layout(location = 0) vec4 ocolor;
 
@@ -45,11 +45,14 @@ uniform int numLights = 3;
 
 uniform float shadowBias = 0.005;
 
+
+// uniforms and values needed for cel shading
 uniform int celLevels = 5;
 uniform float celSpecularCutoff = 0.3; 
 const float celScaleFactor = 1.0 / celLevels; 
 
 uniform float celOutline = 0.5; 
+// endof uniforms and values needed for cel shading
 
 uniform vec3 ambientColor = vec3(0.2, 0.2, 0.2);
 
@@ -88,7 +91,7 @@ void phong(in Light light, in vec3 position, in vec3 normal, out vec3 diffuse, o
 	
 	float intensity = max(dot(lightDir, normal), 0) * spotIntensity;
 
-	float cellIntensity = floor(intensity * celLevels) * celScaleFactor;
+	float cellIntensity = floor(intensity * celLevels) * celScaleFactor; // floor the intensity to force the diffuse into chunks of color
 	diffuse = (light.diffuseColor * cellIntensity);
 	//diffuse = (light.diffuseColor * intensity) * light.intensity;
 
@@ -106,7 +109,7 @@ void phong(in Light light, in vec3 position, in vec3 normal, out vec3 diffuse, o
 		intensity = max(dot(h, normal),0) * spotIntensity;
 
 		intensity = pow(intensity, material.shininess);
-		intensity = (intensity < celSpecularCutoff) ? 0 : 1;
+		intensity = (intensity < celSpecularCutoff) ? 0 : 1; // cut off specular so that it looks the same as the bands
 		specular = vec3(intensity * spotIntensity);
 	}
 }
@@ -125,7 +128,8 @@ void main()
 	// set lights
 	for (int i = 0; i < numLights; i++)
 	{
-		float outline = dot(fnormal, fviewdir);
+		// makes the outline from the viewdirection 
+		float outline = dot(fnormal, fviewdir); 
 		if (outline < celOutline) {
 			ocolor = vec4(1);
 			return;
