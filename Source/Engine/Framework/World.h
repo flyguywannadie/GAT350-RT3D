@@ -4,6 +4,7 @@
 namespace nc
 {
 	class Scene;
+	class Editor;
 	class Renderer;
 
 	// An abstract class that contains the scene and methods to initialize, shutdown, update and draw the world.
@@ -24,5 +25,6 @@ namespace nc
 	protected:
 		bool m_quit = false;
 		std::unique_ptr<Scene> m_scene;
+		std::unique_ptr<Editor> m_editor;
 	};
 }

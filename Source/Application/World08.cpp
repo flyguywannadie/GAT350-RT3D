@@ -9,7 +9,10 @@ namespace nc
     {
         m_scene = std::make_unique<Scene>();
         m_scene->Load("Scenes/scene_cel.json");
+        m_scene->Load("Scenes/scene_editor.json");
         m_scene->Initialize();
+
+        m_editor = std::make_unique<Editor>();
 
         auto texture = std::make_shared<Texture>();
         texture->CreateDepthTexture(1024, 1024);
@@ -42,8 +45,9 @@ namespace nc
         ENGINE.GetSystem<Gui>()->BeginFrame();
 
         m_scene->Update(dt);
-        m_scene->ProcessGui();
 
+        m_editor->Update();
+        m_editor->ProcessGui(m_scene.get());
 
         // this here creates The Cel GUI controls
         ImGui::Begin("Cel");
@@ -105,6 +109,5 @@ namespace nc
 
         // post-render
         renderer.EndFrame();
-        m_scene->GetActorByName("depth debug")->active = false;
     }
 }
